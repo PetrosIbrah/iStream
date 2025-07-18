@@ -9,13 +9,13 @@ iStream is a Server-Client Java project that uses a secure connection TLS/SSL wi
 	
   - Multithreading (Server)
 	
-  - Logging (Server|Client)
+  - Logging (Server | Client)
 	
-  - Process builder for commands (Server|Client)
+  - Process builder for commands (Server | Client)
 	
-  - Video protocol transmission, TCP, UDP, RTP/UDP (Server|Client)
+  - Video protocol transmission, TCP, UDP, RTP/UDP (Server | Client)
 	
-  - Adaptive streaming (Server|Client)
+  - Adaptive streaming (Server | Client)
 	
   - Load Balancing (Server)
 	
@@ -23,11 +23,12 @@ iStream is a Server-Client Java project that uses a secure connection TLS/SSL wi
   
 
 	
-### Requirements:
+## Requirements:
 
-  1. Any video (Server side) in "AvailableVideos/" must be named as followed: "x"-"y"p."z" where x is the video name, y is the display and z is the extention. (For example "Surfing-720p.mp4")
+  1. Any video (Server side) in "AvailableVideos/" must be named as followed: "x"-"y"p."z" where x is the video name, y is the display and z is the extention. For example:
+	<pre> Surfing-720p.mp4 </pre>
 	
-  2. Both Client and Server should have ffmpeg extracted in the following directory: "C:/ffmpeg/bin/" (To update|Fix)
+  2. Both Client and Server should have ffmpeg extracted in the following directory: <pre>C:/ffmpeg/bin/</pre> (To update|Fix)
 	
   3. In order for the client sided fplay recording to include sound "Stream box" from realtek's drivers are recommended.
 	
