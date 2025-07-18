@@ -1,25 +1,25 @@
-# What is this project?
+# What is iStream?
 iStream is a Server-Client Java project that using a secure connection TLS/SSL with encryption keys. The application allows the client to select a video from the Server's Catalog and stream it directly without downloading the video. The client features adaptive streaming, video clipping and more.
 
 ### It implements:
 
-  1. ffmpeg wrapping (Server)
+  - ffmpeg wrapping (Server)
 	
-  2. javaFX (Client)
+  - javaFX (Client)
 	
-  3. Multithreading (Server)
+  - Multithreading (Server)
 	
-  4. Logging (Server|Client)
+  - Logging (Server|Client)
 	
-  5. Process builder for commands (Server|Client)
+  - Process builder for commands (Server|Client)
 	
-  6. Video protocol transmission, TCP, UDP, RTP/UDP (Server|Client)
+  - Video protocol transmission, TCP, UDP, RTP/UDP (Server|Client)
 	
-  7. Adaptive streaming (Server|Client)
+  - Adaptive streaming (Server|Client)
 	
-  8. Load Balancing (Server)
+  - Load Balancing (Server)
 	
-  9. Fplay Recording (Client)
+  - Fplay Recording (Client)
   
 
 	
