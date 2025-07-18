@@ -1,5 +1,5 @@
 # What is iStream?
-iStream is a Server-Client Java project that using a secure connection TLS/SSL with encryption keys. The application allows the client to select a video from the Server's Catalog and stream it directly without downloading the video. The client features adaptive streaming, video clipping and more.
+iStream is a Server-Client Java project that uses a secure connection TLS/SSL with encryption keys. The application allows the client to select a video from the Server's Catalog and stream it directly without downloading the video. The client features adaptive streaming, video clipping and more.
 
 ### It implements:
 
