@@ -31,6 +31,9 @@ iStream is a Server-Client Java project that uses a secure connection TLS/SSL wi
   2. Both Client and Server should have ffmpeg extracted in the following directory: <pre>C:/ffmpeg/bin/</pre> (To update|Fix)
 	
   3. In order for the client sided fplay recording to include sound "Stream box" from realtek's drivers are recommended.
-	
+  
 
-#### This project was conducted without collaborators, and is a clear demonstration of java skills.
+
+*Side note: You can run the server just by running the loadbalancer*
+
+**This project was conducted without collaborators, and is a clear demonstration of java skills.**
