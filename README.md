@@ -28,9 +28,18 @@ iStream is a Server-Client Java project that uses a secure connection TLS/SSL wi
   1. Any video (Server side) in "AvailableVideos/" must be named as followed: "x"-"y"p."z" where x is the video name, y is the display and z is the extention. For example:
 	<pre> Surfing-720p.mp4 </pre>
 	
-  2. Both Client and Server should have ffmpeg extracted in the following directory: <pre>C:/ffmpeg/bin/</pre> (To update|Fix)
+  2. - If you are using **Windows**, make sure you have ffmpeg, ffprobe and ffplay as environment variables. For example:
+       
+     <pre> ffmpeg  => C:/ffmpeg/bin/ffmpeg.exe </pre>
+     <pre> ffprobe => C:/ffmpeg/bin/ffprobe.exe </pre>
+     <pre> ffplay  => C:/ffmpeg/bin/ffplay.exe </pre>
+     Replace "C:/ffmpeg/bin/" with your actual path
+     
+     - If you are on **Linux** make sure ffmpeg is installed using the following command:
+       
+     <pre>sudo apt install ffmpeg</pre>
 	
-  3. In order for the client sided fplay recording to include sound "Stream box" from realtek's drivers are recommended.
+  3. In order for the client sided Video recording to include sound, "Stream box" from realtek's drivers are recommended.
   
 
 
