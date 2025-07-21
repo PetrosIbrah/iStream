@@ -48,8 +48,8 @@ public class Server implements Runnable {
     public static void VideoPopulation() {
         try {
             FFmpegExecutor executor;
-            FFmpeg ffmpeg = new FFmpeg("C:/ffmpeg/bin/ffmpeg.exe");
-            FFprobe ffprobe = new FFprobe("C:/ffmpeg/bin/ffprobe.exe");
+            FFmpeg ffmpeg = new FFmpeg("ffmpeg");
+            FFprobe ffprobe = new FFprobe("ffprobe");
 
             String[] Formats = {"mkv", "mp4", "avi"};
             String[] FormatNames = {"matroska", "mp4", "avi"};
@@ -385,10 +385,10 @@ public class Server implements Runnable {
     public void TCPStream(File Streamed) {
         try {
             ProcessBuilder Command = new ProcessBuilder(
-                    "C:/ffmpeg/bin/ffmpeg.exe",
+                    "ffmpeg",
                     "-i", Streamed.getAbsolutePath(),
                     "-f", "mpegts",
-                    "tcp://" + ClientIp + ":4444?listen"
+                    "tcp://" + ClientIp + ":" + Streamingport + "?listen"
             );
             Command.inheritIO();
             Command.redirectErrorStream(true);
