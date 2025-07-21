@@ -259,9 +259,13 @@ public class ClientController implements Initializable {
 
                 writer = new PrintWriter(process.getOutputStream());
 
-                // Σε περίπτωση μη-συμβατοτητας αντικαταστήστε το "Stereo Mix (Realtek(R) Audio)" με το πραγματικό σας audio device
-                writer.println("C:/ffmpeg/bin/ffmpeg.exe -y -f gdigrab -i title=" + protocol +
-                        " -f dshow -i audio=\"Stereo Mix (Realtek(R) Audio)\"" + // Σε περίπτωση που δεν θελετε audio, διαφράψτε αυτη την γραμμη εδω
+                String ffmpeg = System.getenv("ffmpeg");
+                if (ffmpeg == null || ffmpeg.isEmpty()) {
+                    ffmpeg = "ffmpeg";
+                }
+                // In case of incompatibility please replace "Stereo Mix (Realtek(R) Audio)" with the user's actual  audio device
+                writer.println(ffmpeg + " -y -f gdigrab -i title=" + protocol +
+                        " -f dshow -i audio=\"Stereo Mix (Realtek(R) Audio)\"" + // In case you dont want audio delete this line
                         " -c:v libx264 " +
                         "Recordings"
                         + File.separator + SelectedVideo + "-" + SelectedDisplay + "-" + RecCount + "." + SelectedFormat);
@@ -380,9 +384,13 @@ public class ClientController implements Initializable {
 
     public void TCPStream(){
         try {
+            String ffplay = System.getenv("ffplay");
+            if (ffplay == null || ffplay.isEmpty()) {
+                ffplay = "ffplay";
+            }
             ServerIP = socket.getInetAddress().getHostAddress();
             ProcessBuilder Command = new ProcessBuilder(
-                    "C://ffmpeg/bin/ffplay.exe",
+                    ffplay,
                     "-window_title", "TCP",
                     "tcp://" + ServerIP + ":4444"
             );
@@ -392,15 +400,20 @@ public class ClientController implements Initializable {
 
             log.info("Successful TCP Streaming | Client-side ");
         } catch (Exception e){
+            e.printStackTrace();
             log.error("Unsuccessful TCP Streaming | Client-side ");
         }
     }
 
     public void UDPStream(){
         try {
+            String ffplay = System.getenv("ffplay");
+            if (ffplay == null || ffplay.isEmpty()) {
+                ffplay = "ffplay";
+            }
             ServerIP = socket.getInetAddress().getHostAddress();
             ProcessBuilder Command = new ProcessBuilder(
-                    "C://ffmpeg/bin/ffplay.exe",
+                    ffplay,
                     "-window_title", "UDP",
                     "udp://" + ServerIP + ":" + StreamingPort
             );
@@ -435,9 +448,13 @@ public class ClientController implements Initializable {
             }
 
             try {
+                String ffplay = System.getenv("ffplay");
+                if (ffplay == null || ffplay.isEmpty()) {
+                    ffplay = "ffplay";
+                }
                 ServerIP = socket.getInetAddress().getHostAddress();
                 ProcessBuilder Command = new ProcessBuilder(
-                        "C://ffmpeg/bin/ffplay.exe",
+                        ffplay,
                         "-window_title", protocol,
                         "-protocol_whitelist", "file,rtp,udp",
                         "-i", Vid.getAbsolutePath()
@@ -459,8 +476,12 @@ public class ClientController implements Initializable {
     public void AdaptiveUDPStream () {
         try {
             ServerIP = socket.getInetAddress().getHostAddress();
+            String ffplay = System.getenv("ffplay");
+            if (ffplay == null || ffplay.isEmpty()) {
+                ffplay = "ffplay";
+            }
             ProcessBuilder Command = new ProcessBuilder(
-                    "C://ffmpeg/bin/ffplay.exe",
+                    ffplay,
                     "-x", "1600", "-y", "900",
                     "-window_title", "Adaptive",
                     "-fflags", "nobuffer",

@@ -37,7 +37,9 @@ public class Server implements Runnable {
     private static Process cProcess;
     private static int Seconds = 0;
     private static String AdaptOrNot;
-    private static String Streamingport = "";
+    private String Streamingport = "";
+    private static String ffmpegloc;
+    private static String ffprobeloc;
 
     private static final Logger log = LogManager.getLogger(Server.class);
 
@@ -48,8 +50,8 @@ public class Server implements Runnable {
     public static void VideoPopulation() {
         try {
             FFmpegExecutor executor;
-            FFmpeg ffmpeg = new FFmpeg("ffmpeg");
-            FFprobe ffprobe = new FFprobe("ffprobe");
+            FFmpeg ffmpeg = new FFmpeg(ffmpegloc);
+            FFprobe ffprobe = new FFprobe(ffprobeloc);
 
             String[] Formats = {"mkv", "mp4", "avi"};
             String[] FormatNames = {"matroska", "mp4", "avi"};
@@ -103,7 +105,15 @@ public class Server implements Runnable {
     }
 
     public static void main(String[] args) {
-
+        ffmpegloc = System.getenv("ffmpeg");
+        if (ffmpegloc == null || ffmpegloc.isEmpty()) {
+            ffmpegloc = "ffmpeg";
+        }
+        ffprobeloc = System.getenv("ffprobe");
+        if (ffprobeloc == null || ffprobeloc.isEmpty()) {
+            ffprobeloc = "ffprobe";
+        }
+        
         // Create list of Available videos
         Directory = new File("AvailableVideos");
         File[] Vids = Directory.listFiles();
@@ -144,8 +154,8 @@ public class Server implements Runnable {
 
             // Server Execution while loop
             while (true) {
-                SSLSocket socket = (SSLSocket) serverSocket.accept();
                 ClientCount++;
+                SSLSocket socket = (SSLSocket) serverSocket.accept();
                 log.info("A Client has connected to Server (Port = " + Port + ")");
                 new Thread(new Server(socket)).start();
             }
@@ -266,7 +276,9 @@ public class Server implements Runnable {
     public void SendStreamingPort() {
         try {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            Streamingport = String.valueOf(Port + 10 + ClientCount);
+            long currentTime = System.currentTimeMillis();
+            int timeOffset = (int)(currentTime % 1000);
+            Streamingport = String.valueOf(7000 + (100 * (Port - 8000)) + timeOffset + ClientCount);
             out.println(Streamingport);
             log.info("Sent the proper Streaming Port to Client (" + ClientIp + ")");
         } catch (Exception e) {
@@ -385,10 +397,10 @@ public class Server implements Runnable {
     public void TCPStream(File Streamed) {
         try {
             ProcessBuilder Command = new ProcessBuilder(
-                    "ffmpeg",
+                    ffmpegloc,
                     "-i", Streamed.getAbsolutePath(),
                     "-f", "mpegts",
-                    "tcp://" + ClientIp + ":" + Streamingport + "?listen"
+                    "tcp://" + ClientIp + ":4444?listen"
             );
             Command.inheritIO();
             Command.redirectErrorStream(true);
@@ -402,7 +414,7 @@ public class Server implements Runnable {
     public void UDPStream(File Streamed) {
         try {
             ProcessBuilder Command = new ProcessBuilder(
-                    "C:/ffmpeg/bin/ffmpeg.exe",
+                    ffmpegloc,
                     "-re",
                     "-ss", String.valueOf(Seconds),
                     "-i", Streamed.getAbsolutePath(),
@@ -423,7 +435,7 @@ public class Server implements Runnable {
         try {
             try {
                 ProcessBuilder Command = new ProcessBuilder(
-                        "C:/ffmpeg/bin/ffmpeg.exe",
+                        ffmpegloc,
                         "-re",
                         "-i", Streamed.getAbsolutePath(),
                         "-an",

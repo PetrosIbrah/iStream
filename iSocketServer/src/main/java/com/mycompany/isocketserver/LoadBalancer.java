@@ -115,7 +115,6 @@ public class LoadBalancer {
                             WriteToServer.println(msg);
                         }
                     } catch (IOException e) {
-                        // εξοδος adaptive
                         WriteToServer.println("Exit");
                         log.warn("Couldn't retrieve Speed from Client | Load Balancer");
                     }
@@ -136,7 +135,6 @@ public class LoadBalancer {
             }
 
             if (Adaptive.equals("false")) {
-                // εξοδος σε περιπτωση adaptive
                 Request = ReadFromClient.readLine();
                 WriteToServer.println(Request);
             }
